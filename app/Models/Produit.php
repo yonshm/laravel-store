@@ -9,4 +9,13 @@ class Produit extends Model
 {
     use HasFactory;
     protected $fillable = ['nom', 'prix', 'quantite', 'description', 'categorie_id'];
+
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+
+    public function commandes(){
+        return $this->belongsToMany(Commande::class)->withTimestamps();
+    }
 }
