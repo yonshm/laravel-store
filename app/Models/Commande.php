@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class Commande extends Model
@@ -12,6 +13,14 @@ class Commande extends Model
     protected $fillable = ['date', 'time'];
 
     public function produits(){
-        return $this->belongsToMany(Produit::class)->withTimestamps();
+        return $this->BelongsToMany(Produit::class)->withPivot('quantite');
+    }
+
+    public function totalePrix(){
+        $total = 0;
+        foreach($this->produits as $produit){
+            $total += $produit->prix * $produit->pivot->quantite;
+        }
+        return $total;
     }
 }
