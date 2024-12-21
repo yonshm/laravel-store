@@ -23,4 +23,8 @@ class Commande extends Model
         }
         return $total;
     }
+
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
 }
