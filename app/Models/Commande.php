@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Commande extends Model
 {
     use HasFactory;
-    protected $fillable = ['date', 'time'];
+    protected $fillable = ['client_id', 'date', 'montant'];
 
     public function produits(){
         return $this->BelongsToMany(Produit::class)->withPivot('quantite');
@@ -22,6 +22,19 @@ class Commande extends Model
             $total += $produit->prix * $produit->pivot->quantite;
         }
         return $total;
+    }
+
+    static function ajouterCommand($produitsIds, $quantites, $client_id, $date){
+        $commande = new Commande();
+        $commande->client_id = $client_id;
+        $commande->date = $date;
+        $commande->montant = 0;
+        $commande->save();
+        for($i = 0; $i < count($produitsIds); $i++){
+            $commande->produits()->attach($produitsIds[$i], ['quantite' => $quantites[$i]]);
+        }
+        $commande->montant = $commande->totalePrix();
+        $commande->save();
     }
 
     public function client(){

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,8 @@ class CommandeFactory extends Factory
     {
         return [
             "date" => fake()->date(),
-            "temps" => fake()->time()
+            "montant" => fake()->randomFloat(2),
+            "client_id" => Client::inRandomOrder()->first()->id,
         ];
     }
 }
