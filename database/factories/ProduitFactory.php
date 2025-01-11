@@ -24,6 +24,7 @@ class ProduitFactory extends Factory
             "quantite" => fake()->randomNumber(2),
             "description" => fake()->text(20),
             "categorie_id" => Categorie::inRandomOrder()->first()->id,
+            'image' => fake()->imageUrl(640, 480, 'products')
         ];
     }
 }

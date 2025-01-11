@@ -1,10 +1,11 @@
+<x-layout>
 <div>
     <a href="{{route('categories.create')}}"> Ajouter une nouvelle categorie</a>
     <h1>Liste des categories</h1>
     
     <p>le nombre des categories est : {{count($categories)}}</p>
 
-    <table border="1">
+    <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
                 <th>Id</th>
@@ -15,7 +16,7 @@
         </thead>
         <tbody>
             @foreach($categories as $item)
-                <tr>
+            <tr id="{{$item->id}}">              
                     <td>{{$item->id}}</td>
                     <td>{{$item->nom}}</td>
                     <td>{{$item->description}}</td>
@@ -27,15 +28,13 @@
                         <a href="{{route('categories.edit', $item->id)}}">Modifier</a>
                     </td>
                     <td>
-                        <form action="{{route('categories.destroy', $item->id)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="Supprimer">
-                        </form>
+                        <button class="delete-btn">Delete</button>
                     </td>
                 </tr>
             
             @endforeach
+            
         </tbody>
     </table>
 </div>
+</x-layout>
