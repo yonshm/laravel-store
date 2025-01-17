@@ -15,7 +15,7 @@ class ProduitController extends Controller
     public function index()
     {
         
-        $produits = Produit::paginate(10);
+        $produits = Produit::all();
         $categories = Categorie::all();
         return view('produits.index',compact('produits','categories')); 
     }
@@ -26,7 +26,7 @@ class ProduitController extends Controller
 
         $produits = Produit::where("categorie_id", $id)->get();
         
-        $categories = Categorie::all();
+        $categories = Categorie::with('categorie')->get();
         return view('produits.index',compact('produits','categories'));
     }
 
@@ -84,14 +84,15 @@ class ProduitController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd(request()->method());
         $produit = Produit::find($id);
         $validateData = $request->validate([
-            'nom' => 'required|string'.$id,
-            'prix' => 'required'.$id,
-            'quantite' => 'required|numeric' .$id,
-            'description' => 'nullable|string' .$id,
-            'categorie_id' => 'required|exists:categories,id' .$id,
-            'image' => 'image|max:2048' .$id
+            'nom' => 'required|string',
+            'prix' => 'required',
+            'quantite' => 'required|numeric',
+            'description' => 'nullable|string',
+            'categorie_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|max:2048'
         ]);
         if($request->hasFile('image')){
             $imagePath = $request->file('image')->store('produits/images', 'public');

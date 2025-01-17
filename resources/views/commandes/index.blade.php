@@ -31,9 +31,11 @@
                                 
                             
                         </td>
-                        <td><a href="{{route('commandes.show',$commande->id)}}">Details</a></td>
                         <td>
-                            <button class="delete-btn">Delete</button>
+                            <button class="bg-success"><a href="{{route('commandes.show',$commande->id)}}">Details</a></button>
+                            </td>
+                        <td>
+                            <button class="delete-btn bg-danger">Delete</button>
                         </td>
                     </tr>
                 @endforeach

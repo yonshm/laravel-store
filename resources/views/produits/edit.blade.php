@@ -9,7 +9,7 @@
         </ul>
     </div>
     @endif
-    <form action="{{route('produits.update',$produit->id)}}" method="POST">
+    <form action="{{route('produits.update',$produit->id)}}" method="POST" enctype="multipart/form-data" class="shadow-lg p-4 rounded bg-light">
         @csrf
         @method('PUT')
         <div>
@@ -31,7 +31,7 @@
         </div>
         <div>
             <label for="img">Image</label>
-            <img src="{{asset('storage/images'.$produit->image)}}" alt="">
+            <img src="{{ asset('storage/' . $produit->image)}}" alt="">
             <input type="file" id="image" name="image" class="form-control" accept="images/*">
         </div>
         <div>
